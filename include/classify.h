@@ -6,7 +6,7 @@ enum Classifications
     CLASSIFICATIONS_BINARY,
 };
 
-typedef int (ClassifyFunc)(float);
+typedef int (ClassifyFunc) (double);
 
 /*
  * A set of common classification functions

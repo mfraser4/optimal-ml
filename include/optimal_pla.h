@@ -6,14 +6,13 @@
 #define __OPTIMAL_PLA_H__
 
 #include <glib-object.h>
+#include <gerror.h>
 
-/**
- * TODO: define PLA errors
- */
+#include "classify.h"
 
-/**
- * TODO: PLA options (enum?)
- */
+#define OPTIMAL_PLA_DEGREE          "degree"
+#define OPTIMAL_PLA_POLY_FUNC       "poly-func"
+#define OPTIMAL_PLA_CLASSIFY_FUNC   "classify-func"
 
 /*
  * Default values
@@ -23,15 +22,30 @@
 
 G_BEGIN_DECLS
 
-#define OPTIMAL_TYPE_PLA optimal_pla_get_type ()
-G_DECLARE_FINAL_TYPE (OptimalPla, optimal_pla, OPTIMAL, PLA, GObject)
+#define OPTIMAL_TYPE_PLA optimal_pla_get_type()
+G_DEFINE_TYPE_WITH_PRIVATE(OptimalPla, optimal_pla, GObject)
 
-/*
- * Will create optimal_pla_get_type and set optimal_pla_parent_class
+struct {
+    gdouble threshold;
+
+    guint32 max_iters;
+} optimal_pla_config_t;
+
+struct _OptimalPla {
+    GObject parent_instance;
+
+    gsl_vector *gv;
+
+    ClassifyFunc *classify;
+
+    optimal_pla_config_t optimal_pla_config;
+};
+
+/**
+ * TODO: define PLA errors
  */
-G_DEFINE_TYPE (OptimalPla, optimal_pla, G_TYPE_OBJECT)
 
-OptimalPla *optimal_pla_new(guint8 degree);
+OptimalPla *optimal_pla_new(size_t degree);
 
 gboolean optimal_pla_train(OptimalPla *optimal_pla,
                            gdouble **data,
@@ -43,4 +57,4 @@ void pla_free(OptimalPla *optimal_pla);
 
 G_END_DECLS
 
-#endif __OPTIMAL_PLA_H__
+#endif /* __OPTIMAL_PLA_H__ */
