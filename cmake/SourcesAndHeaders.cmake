@@ -1,7 +1,9 @@
 set(sources
-    src/pla.h
+    ${CMAKE_SOURCE_DIR}/src/optimalpla.cpp
+    ${CMAKE_SOURCE_DIR}/src/perceptron.cpp
 )
 
 set(headers
-    include/pla.c
+    ${CMAKE_SOURCE_DIR}/include/optimalpla.hpp
+    ${CMAKE_SOURCE_DIR}/include/perceptron.hpp
 )
